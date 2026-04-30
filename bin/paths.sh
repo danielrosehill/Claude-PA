@@ -49,23 +49,65 @@ claude_pa_ensure_dirs() {
     "$CLAUDE_PA_SCRIPTS_DIR"
 }
 
-# Resolve a clip path. Looks first in the user dir (rendered/custom) then
-# falls back to the plugin's seed sounds dir.
+# Resolve a clip path. Resolution order:
+#   1. $CLAUDE_PA_HOME/$rel exact (user-rendered/custom clip)
+#   2. $PLUGIN_ROOT/$rel exact (seed asset shipped with plugin)
+#   3. Voice-pack remap: rewrite "sounds/<category>/<name>.<ext>" →
+#      "sounds/voices/<voice_pack>/<category>/<name>.mp3" and try (1) then (2).
+#      <voice_pack> comes from $CLAUDE_PA_CONFIG_FILE .voice_pack (default "wildcard").
+#   4. Strip soundfx/ prefix and try plugin root (sfx live at top-level soundfx/).
 claude_pa_resolve_clip() {
   local rel="$1"
-  if [[ -f "$CLAUDE_PA_HOME/$rel" ]]; then
-    echo "$CLAUDE_PA_HOME/$rel"
-  elif [[ -f "$PLUGIN_ROOT/$rel" ]]; then
-    echo "$PLUGIN_ROOT/$rel"
-  else
-    return 1
+
+  [[ -f "$CLAUDE_PA_HOME/$rel" ]] && { echo "$CLAUDE_PA_HOME/$rel"; return 0; }
+  [[ -f "$PLUGIN_ROOT/$rel" ]]   && { echo "$PLUGIN_ROOT/$rel";   return 0; }
+
+  # Voice-pack remap for sounds/<category>/<file>
+  if [[ "$rel" =~ ^sounds/([^/]+)/(.+)\.(wav|mp3|ogg|flac)$ ]]; then
+    local cat="${BASH_REMATCH[1]}" file="${BASH_REMATCH[2]}"
+    local pack="wildcard"
+    if [[ -f "$CLAUDE_PA_CONFIG_FILE" ]] && command -v jq >/dev/null 2>&1; then
+      pack=$(jq -r '.voice_pack // "wildcard"' "$CLAUDE_PA_CONFIG_FILE" 2>/dev/null || echo "wildcard")
+    fi
+    local remapped="sounds/voices/$pack/$cat/$file.mp3"
+    [[ -f "$CLAUDE_PA_HOME/$remapped" ]] && { echo "$CLAUDE_PA_HOME/$remapped"; return 0; }
+    [[ -f "$PLUGIN_ROOT/$remapped" ]]   && { echo "$PLUGIN_ROOT/$remapped";   return 0; }
   fi
+
+  return 1
+}
+
+# Auto-bootstrap a default config from the shipped example if missing AND
+# CLAUDE_PA_AUTOINIT=1 (set by the test-harness, /onboard, or any caller that
+# wants "just work" semantics). Writes nothing if config already exists.
+claude_pa_autoinit_config() {
+  [[ -f "$CLAUDE_PA_CONFIG_FILE" ]] && return 0
+  [[ "${CLAUDE_PA_AUTOINIT:-0}" == "1" ]] || return 1
+  claude_pa_ensure_dirs
+  local example="$PLUGIN_ROOT/config/config.example.json"
+  [[ -f "$example" ]] || return 1
+  cp "$example" "$CLAUDE_PA_CONFIG_FILE"
+  return 0
 }
 
 claude_pa_require_config() {
   if [[ ! -f "$CLAUDE_PA_CONFIG_FILE" ]]; then
+    claude_pa_autoinit_config && return 0
     echo "claude-pa: no config at $CLAUDE_PA_CONFIG_FILE" >&2
-    echo "           run /claude-pa:onboard or /claude-pa:setup-ha first" >&2
+    echo "           run /claude-pa:onboard, or set CLAUDE_PA_AUTOINIT=1 to bootstrap from defaults" >&2
     return 1
+  fi
+}
+
+# Tier cap — used by the test harness to prevent escalation past tier N.
+# If $CLAUDE_PA_MAX_TIER is set, dispatcher silently downgrades any higher tier.
+claude_pa_cap_tier() {
+  local requested="$1"
+  local cap="${CLAUDE_PA_MAX_TIER:-}"
+  [[ -z "$cap" ]] && { echo "$requested"; return; }
+  if (( requested > cap )); then
+    echo "$cap"
+  else
+    echo "$requested"
   fi
 }

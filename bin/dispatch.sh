@@ -23,15 +23,36 @@ TAG="${1:-}"; shift || true
 TIER=0
 NAME_FLAG=""
 USE_SIGNAL=1
+USE_FLASH=1
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --tier)      TIER="$2"; shift 2 ;;
     --no-name)   NAME_FLAG="--no-name"; shift ;;
     --no-signal) USE_SIGNAL=0; shift ;;
+    --no-flash)  USE_FLASH=0; shift ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac
 done
-[[ -n "$TAG" ]] || { echo "usage: dispatch.sh <tag> [--tier N] [--no-name] [--no-signal]" >&2; exit 2; }
+[[ -n "$TAG" ]] || { echo "usage: dispatch.sh <tag> [--tier N] [--no-name] [--no-signal] [--no-flash]" >&2; exit 2; }
+
+# Mute / schedule gate. Silent no-op if the system is muted or outside its
+# active window. Bypass with CLAUDE_PA_FORCE=1 (used by the test harness, or
+# when explicitly running a smoke test from CLI).
+if [[ "${CLAUDE_PA_FORCE:-0}" != "1" ]]; then
+  if "$SCRIPT_DIR/is-muted.sh" >/dev/null 2>&1; then
+    # Optional: log skipped dispatches so the user can see them later.
+    if [[ -d "$CLAUDE_PA_LOG_DIR" ]]; then
+      printf '%s skip tag=%s tier=%s reason=%s\n' \
+        "$(date -Iseconds)" "$TAG" "$TIER" \
+        "$("$SCRIPT_DIR/is-muted.sh" --why 2>/dev/null || echo muted)" \
+        >> "$CLAUDE_PA_LOG_DIR/dispatch.log" 2>/dev/null || true
+    fi
+    exit 0
+  fi
+fi
+
+# Apply tier cap (test harness / safety override)
+TIER=$(claude_pa_cap_tier "$TIER")
 
 MANIFEST="$CLAUDE_PA_MANIFEST"
 TIER_DEF=$(jq -r --arg t "$TIER" '.escalation_tiers[$t] // empty' "$MANIFEST")
@@ -42,11 +63,16 @@ REGISTER=$(echo "$TIER_DEF" | jq -r '.register // "dispatcher"')
 USE_NAME=$(echo "$TIER_DEF" | jq -r '.use_name // true')
 [[ "$USE_NAME" == "false" ]] && NAME_FLAG="--no-name"
 
-# Fire signal bulb in parallel (best-effort, non-blocking, swallows errors)
-if [[ "$USE_SIGNAL" -eq 1 ]]; then
-  PATTERN=$(jq -r --arg t "$TAG" '.tags[$t].signal_pattern // empty' "$MANIFEST")
-  if [[ -n "$PATTERN" && "$PATTERN" != "null" ]]; then
+# Fire visual channels in parallel (best-effort, non-blocking, swallows errors).
+# signal-bulb (HA RGB lamp) and screen-flash (desktop overlay/notification) both
+# read the same per-tag signal_pattern.
+PATTERN=$(jq -r --arg t "$TAG" '.tags[$t].signal_pattern // empty' "$MANIFEST")
+if [[ -n "$PATTERN" && "$PATTERN" != "null" ]]; then
+  if [[ "$USE_SIGNAL" -eq 1 ]]; then
     "$SCRIPT_DIR/signal-bulb.sh" "$PATTERN" >/dev/null 2>&1 &
+  fi
+  if [[ "$USE_FLASH" -eq 1 ]]; then
+    "$SCRIPT_DIR/screen-flash.sh" "$PATTERN" >/dev/null 2>&1 &
   fi
 fi
 
@@ -56,6 +82,9 @@ case "$TARGET" in
   ha:*)
     KEY="${TARGET#ha:}"
     exec "$SCRIPT_DIR/pa-send.sh" "$TAG" "$KEY" --register "$REGISTER" $NAME_FLAG ;;
+  mqtt:*)
+    KEY="${TARGET#mqtt:}"
+    exec "$SCRIPT_DIR/pa-send-mqtt.sh" "$TAG" "$KEY" --register "$REGISTER" $NAME_FLAG ;;
   doorbell)      exec "$SCRIPT_DIR/ring-doorbell.sh" ;;
   wake:bedroom)  exec "$SCRIPT_DIR/wake-user.sh" ;;
   twilio:spouse) exec "$SCRIPT_DIR/pa-call-spouse.sh" --confirm ;;

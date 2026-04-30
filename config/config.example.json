@@ -3,6 +3,10 @@
 
   "user_name": "Daniel",
 
+  "voice_pack": "wildcard",
+  "_voice_pack_comment": "Subdir under sounds/voices/ to use for spoken clips. Available packs ship with the plugin: 'wildcard' (default gruff dispatcher), 'wildcard-2' (alt take), 'dj-fred', 'alarmed-dispatcher' (usage warnings only).",
+
+
   "local_audio": {
     "player": "paplay",
     "sink": null,
@@ -14,6 +18,20 @@
     "api_key_env": "FISH_AUDIO_API_KEY",
     "default_voice_id": "6c7e5318ee04449b8b3c0a06ad57b5b0",
     "name_clip_voice_id": "6c7e5318ee04449b8b3c0a06ad57b5b0"
+  },
+
+  "mqtt": {
+    "_comment": "Direct MQTT transport — alternative to home_assistant for users running Mosquitto (or any MQTT broker) with their own subscriber on a speaker / ESP / Tasmota / custom client. Each tier target prefixed 'mqtt:<key>' in the manifest publishes a JSON payload to '<base_topic>/<key>'. Subscribers are responsible for downloading audio_url and playing it. Requires mosquitto-clients (mosquitto_pub).",
+    "enabled": false,
+    "host": "localhost",
+    "port": 1883,
+    "base_topic": "claude-pa",
+    "username": null,
+    "password_env": "MQTT_PASSWORD",
+    "tls": false,
+    "client_id": null,
+    "qos": 0,
+    "retain": false
   },
 
   "home_assistant": {
@@ -47,6 +65,14 @@
     "_comment": "Continuous visual status channel. Fires in PARALLEL with audio dispatches. Requires an RGB-capable light entity.",
     "enabled": false,
     "entity": null
+  },
+
+  "screen_flash": {
+    "_comment": "On-screen visual ping. Fires in PARALLEL with audio + signal bulb. Modes: 'overlay' (full-screen colored flash via Python tkinter — needs DISPLAY/WAYLAND_DISPLAY + python3-tk), 'notify' (libnotify desktop notification), 'auto' (overlay if available, else notify). Set enabled=false for headless environments.",
+    "enabled": true,
+    "mode": "auto",
+    "duration_ms": 600,
+    "flash_count": 3
   },
 
   "wake": {

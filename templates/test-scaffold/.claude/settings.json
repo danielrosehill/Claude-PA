@@ -1,0 +1,8 @@
+{
+  "_comment": "Throwaway test scaffold for claude-pa. CLAUDE_PA_MAX_TIER caps escalation at the local desk speaker — no doorbell, no whole-house PA, no bedroom strobe. Do not raise it without understanding what each tier does.",
+  "enabledPlugins": { "claude-pa": true },
+  "env": {
+    "CLAUDE_PA_AUTOINIT": "1",
+    "CLAUDE_PA_MAX_TIER": "0"
+  }
+}

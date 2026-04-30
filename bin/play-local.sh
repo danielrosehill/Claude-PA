@@ -43,7 +43,11 @@ TMPDIR="$(mktemp -d)"; trap 'rm -rf "$TMPDIR"' EXIT
 # Resolve optional SFX pre-roll for this tag (longest matching prefix)
 SFX=""
 SFX_KEY=$(jq -r --arg t "$TAG" '
-  [.tag_sfx | to_entries[] | select(.key != "_comment") | select($t | startswith(.key)) | .key] | sort_by(length) | last // ""
+  [.tag_sfx | to_entries[]
+    | select(.key != "_comment")
+    | select(.key as $k | $t | startswith($k))
+    | .key]
+  | sort_by(length) | last // ""
 ' "$MANIFEST")
 if [[ -n "$SFX_KEY" ]]; then
   # Value can be a string or an array — array means random pick
