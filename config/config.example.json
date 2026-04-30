@@ -1,0 +1,79 @@
+{
+  "_comment": "Live config lives at $CLAUDE_PA_HOME/config.json (default: ~/.local/share/claude-pa/config.json), NOT here. This file is shipped with the plugin as a template — copy + edit, or run /claude-pa:setup-ha to have an agent fill it in for you.",
+
+  "user_name": "Daniel",
+
+  "local_audio": {
+    "player": "paplay",
+    "sink": null,
+    "static_volume_db": -18,
+    "voice_volume_db": 0
+  },
+
+  "fish_audio": {
+    "api_key_env": "FISH_AUDIO_API_KEY",
+    "default_voice_id": "6c7e5318ee04449b8b3c0a06ad57b5b0",
+    "name_clip_voice_id": "6c7e5318ee04449b8b3c0a06ad57b5b0"
+  },
+
+  "home_assistant": {
+    "enabled": false,
+    "base_url": "http://homeassistant.local:8123",
+    "token_env": "HASS_TOKEN",
+    "media_host_url": "http://YOUR_HOST:8000",
+    "speakers": {
+      "desk": null,
+      "kitchen": null,
+      "living_room": null,
+      "whole_house": null
+    }
+  },
+
+  "chime": {
+    "enabled": false,
+    "entity": null,
+    "service": null,
+    "sound_url": null
+  },
+
+  "doorbell": {
+    "enabled": false,
+    "entity": null,
+    "rings": 1,
+    "interval_seconds": 1.5
+  },
+
+  "signal_bulb": {
+    "_comment": "Continuous visual status channel. Fires in PARALLEL with audio dispatches. Requires an RGB-capable light entity.",
+    "enabled": false,
+    "entity": null
+  },
+
+  "wake": {
+    "_comment": "Tier 7. Defaults OFF. Flashes the bedroom light to wake the user. Only fires within night_hours unless --force is passed.",
+    "enabled": false,
+    "bedroom_light_entity": null,
+    "night_hours": {"start": "23:00", "end": "07:00"},
+    "flash_count": 4,
+    "flash_interval_seconds": 0.6
+  },
+
+  "spouse_call": {
+    "_comment": "Tier 8. Defaults OFF. Calls the user's spouse via Twilio to passive-aggressively complain. Planned feature — stub only. Requires TWILIO_ACCOUNT_SID + TWILIO_AUTH_TOKEN.",
+    "enabled": false,
+    "spouse_phone": null,
+    "twilio_from_number": null
+  },
+
+  "escalation": {
+    "enabled": true,
+    "idle_marker_path": null
+  },
+
+  "usage_monitor": {
+    "_comment": "Polls Claude Code session JSONL and fires usage:* dispatches on threshold crossings. Run via a Stop hook (see commands/setup-usage-monitor.md). session_token_budget defines what 100% means for one session.",
+    "enabled": false,
+    "session_token_budget": 200000,
+    "thresholds": [50, 75, 90, 95]
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "_comment": "Tag → clip mapping. Each tag has a list of clips (random pick if multiple) and a signal_pattern that the signal bulb fires in parallel. The 'name_clip' is generated at onboarding and prepended to most dispatches.",
+  "name_clip": "sounds/name/user.wav",
+  "static_loop": "sounds/bed/static.wav",
+  "sfx": {
+    "_comment": "Pre-roll stings prepended to spoken clips. Resolved via claude_pa_resolve_clip — falls back to the plugin folder if not in user dir.",
+    "pa_bell": "soundfx/airport-pa-bell.mp3",
+    "chime_ding": "soundfx/freesound_community-ding-47489.mp3",
+    "chime_soft": "soundfx/universfield-new-notification-036-485897.mp3",
+    "success": "soundfx/success-chime.mp3",
+    "siren": "soundfx/repeat_siren.mp3",
+    "security_alarm": "soundfx/security-alamr.mp3",
+    "alarm_clock": "soundfx/freesound_community-alarm-clock-90867.mp3",
+    "taxi_horn": "soundfx/universfield-automobile-horn-153260.mp3",
+    "impatient_horn": "soundfx/universfield-automobile-horn-02-352065.mp3",
+    "ship_horn": "soundfx/universfield-ship-horn-352063.mp3",
+    "cymbal_crash": "soundfx/u_rm9kk1yu9k-cymbal-crash-412547.mp3",
+    "walkie_click": "soundfx/freesound_community-088524_walkie-talkie-83500.mp3",
+    "mayday": "soundfx/titigwen-mayday-mayday-392997.mp3",
+    "help": "soundfx/help.mp3",
+    "hey": "soundfx/digitalstore07-hey-430371.mp3",
+    "shout": "soundfx/freesound_community-shout-104972.mp3",
+    "shout_huuto": "soundfx/freesound_community-pandora-huuto1-108251.mp3",
+    "female_shout": "soundfx/freesound_community-female_shout_02-40730.mp3",
+    "heavy_grunt": "soundfx/freesound_community-heavy-grunt-6969.mp3",
+    "glass_break": "soundfx/11325622-glass-breaking-sound-effect-240679.mp3"
+  },
+  "register_wrap": {
+    "_comment": "Bookend SFX wrapped around the spoken portion, keyed by register. The dispatcher register gets walkie-talkie clicks at both ends so every bark sounds like a real radio transmission.",
+    "dispatcher": {"intro": "walkie_click", "outro": "walkie_click"}
+  },
+  "tag_sfx": {
+    "_comment": "Optional SFX prepended to a dispatch. Value can be a single sfx name (string) or an array of names (random pick per dispatch). Looked up by longest matching prefix.",
+    "pa:": "pa_bell",
+    "pa:household": "ship_horn",
+    "complete:project": "cymbal_crash",
+    "complete:": "success",
+    "catastrophe:codebase-destroyed": ["glass_break", "siren"],
+    "catastrophe:": "siren",
+    "attention:generic": ["taxi_horn", "hey", "shout", "shout_huuto", "female_shout"],
+    "attention:approval-needed": ["help", "hey"],
+    "status:subagent-hurry": ["impatient_horn", "heavy_grunt"],
+    "status:blocker": "mayday",
+    "usage:warning-90": "alarm_clock",
+    "usage:limit-imminent": "siren",
+    "usage:limit-hit": "security_alarm"
+  },
+  "tags": {
+    "attention:approval-needed": {
+      "clips": ["sounds/attention/user-user.wav"],
+      "signal_pattern": "waiting"
+    },
+    "attention:generic": {
+      "clips": ["sounds/attention/pick-up.wav", "sounds/attention/oi.wav", "sounds/attention/hey-you.wav"],
+      "signal_pattern": "waiting"
+    },
+    "status:subagent-running": {
+      "clips": ["sounds/status/trying-subagent.wav", "sounds/status/still-waiting.wav"],
+      "signal_pattern": "working"
+    },
+    "status:subagent-hurry": {
+      "clips": ["sounds/status/subagent-hurry-up.wav"],
+      "signal_pattern": "working"
+    },
+    "status:subagent-done": {
+      "clips": ["sounds/status/subagent-done.wav"],
+      "signal_pattern": "done"
+    },
+    "status:plugin-running": {
+      "clips": ["sounds/status/running-plugin.wav"],
+      "signal_pattern": "working"
+    },
+    "status:blocker": {
+      "clips": ["sounds/status/blocker-hit.wav"],
+      "signal_pattern": "waiting"
+    },
+    "status:thinking": {
+      "clips": [],
+      "signal_pattern": "thinking"
+    },
+    "pa:return": {
+      "clips": ["sounds/pa/pa-return-to-computer.wav"],
+      "signal_pattern": "waiting"
+    },
+    "pa:household": {
+      "clips": ["sounds/pa/pa-attention-household.wav"],
+      "signal_pattern": "waiting"
+    },
+    "pa:front-desk": {
+      "clips": ["sounds/pa/pa-front-desk.wav"],
+      "signal_pattern": "waiting"
+    },
+    "pa:customer-service": {
+      "clips": ["sounds/pa/pa-customer-service.wav"],
+      "signal_pattern": "waiting"
+    },
+    "complete:project": {
+      "clips": ["sounds/complete/project-complete.wav"],
+      "signal_pattern": "done"
+    },
+    "complete:gruff": {
+      "clips": ["sounds/complete/job-done-gruff.wav"],
+      "signal_pattern": "done"
+    },
+    "catastrophe:codebase-destroyed": {
+      "clips": ["sounds/catastrophe/codebase-destroyed.wav"],
+      "signal_pattern": "error"
+    },
+    "ambient:idle": {
+      "clips": ["sounds/ambient/ambient-typical.wav", "sounds/ambient/ambient-cmon.wav", "sounds/ambient/ambient-radio-check.wav"],
+      "signal_pattern": null
+    },
+    "usage:warning-50": {
+      "clips": ["sounds/usage/halfway.wav"],
+      "signal_pattern": "working"
+    },
+    "usage:warning-75": {
+      "clips": ["sounds/usage/three-quarters.wav"],
+      "signal_pattern": "waiting"
+    },
+    "usage:warning-90": {
+      "clips": ["sounds/usage/ninety-percent.wav"],
+      "signal_pattern": "waiting"
+    },
+    "usage:limit-imminent": {
+      "clips": ["sounds/usage/limit-imminent.wav"],
+      "signal_pattern": "error"
+    },
+    "usage:limit-hit": {
+      "clips": ["sounds/usage/limit-hit.wav"],
+      "signal_pattern": "error"
+    }
+  },
+  "escalation_tiers": {
+    "0": {"target": "local",          "register": "dispatcher", "use_name": true,  "delay_seconds": 0,    "label": "desk speaker (local)"},
+    "1": {"target": "chime",          "register": null,         "use_name": false, "delay_seconds": 30,   "label": "🔔 gentle chime"},
+    "2": {"target": "ha:desk",        "register": "dispatcher", "use_name": true,  "delay_seconds": 90,   "label": "desk speaker (Home Assistant)"},
+    "3": {"target": "ha:kitchen",     "register": "dispatcher", "use_name": true,  "delay_seconds": 180,  "label": "kitchen"},
+    "4": {"target": "doorbell",       "register": null,         "use_name": false, "delay_seconds": 300,  "label": "🚪 doorbell (Pavlovian)"},
+    "5": {"target": "ha:living_room", "register": "pa",         "use_name": false, "delay_seconds": 420,  "label": "living room (PA register)"},
+    "6": {"target": "ha:whole_house", "register": "pa",         "use_name": false, "delay_seconds": 600,  "label": "📢 whole-house PA"},
+    "7": {"target": "wake:bedroom",   "register": "lights",     "use_name": false, "delay_seconds": 900,  "label": "🌙 bedroom lights flash (night, opt-in)"},
+    "8": {"target": "twilio:spouse",  "register": "phone",      "use_name": false, "delay_seconds": 1800, "label": "☎️ Twilio spouse call (opt-in, planned)"}
+  },
+  "_signal_bulb": "Patterns fire in PARALLEL with audio dispatches via bin/dispatch.sh — the 'signal_pattern' field on each tag drives bin/signal-bulb.sh. Patterns: thinking | waiting | working | done | error | clear."
+}
