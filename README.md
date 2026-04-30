@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="banner/banner.png" alt="Claude-PA" width="100%" />
+</p>
+
 # Claude-PA
 
 A Claude Code plugin that turns Claude into a passive-aggressive PA system — barking status updates at you over a speaker, lighting up an RGB "Claude-signal" bulb on your desk, and, when you ignore all of that, escalating across your house via Home Assistant until somebody comes and finds you.
