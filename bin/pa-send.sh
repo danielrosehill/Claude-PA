@@ -54,6 +54,17 @@ fi
 CLIP_REL=$(jq -r --arg t "$TAG" '.tags[$t].clips[0] // ""' "$MANIFEST")
 [[ -n "$CLIP_REL" ]] || { echo "claude-pa: no clip for tag $TAG" >&2; exit 3; }
 
+# Voice-pack URL remap — manifest references sounds/<category>/<file>.<ext> but
+# rendered clips actually live at sounds/voices/<pack>/<category>/<file>.mp3.
+# The MEDIA_HOST is expected to point at the served root that mirrors the
+# `voices/<pack>/<cat>/<file>.mp3` tree (e.g. HA's /config/www/claude-pa/).
+if [[ "$CLIP_REL" =~ ^sounds/([^/]+)/(.+)\.(wav|mp3|ogg|flac)$ ]]; then
+  CAT="${BASH_REMATCH[1]}"
+  FILE="${BASH_REMATCH[2]}"
+  PACK=$(jq -r '.voice_pack // "wildcard"' "$CONFIG" 2>/dev/null || echo "wildcard")
+  CLIP_REL="voices/$PACK/$CAT/$FILE.mp3"
+fi
+
 CLIP_URL="${MEDIA_HOST}/${CLIP_REL}"
 
 curl -sf -X POST \

@@ -8,6 +8,7 @@ StartLimitBurst=5
 Type=simple
 ExecStart=/usr/bin/env python3 @PLUGIN_ROOT@/bin/escalator.py
 Environment=CLAUDE_PA_HOME=@CLAUDE_PA_HOME@
+EnvironmentFile=-@CLAUDE_PA_HOME@/env
 Restart=on-failure
 RestartSec=3
 # No need for elevated privileges — pure file IPC + subprocess to dispatch.sh
