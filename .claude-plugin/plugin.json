@@ -2,6 +2,10 @@
   "name": "claude-pa",
   "version": "0.2.0",
   "description": "Passive-aggressive PA system for Claude Code. Claude barks status updates at you over a speaker; if ignored, escalates across the house via Home Assistant.",
-  "author": "Daniel Rosehill",
+  "author": {
+    "name": "Daniel Rosehill",
+    "email": "public@danielrosehill.com",
+    "url": "https://danielrosehill.com"
+  },
   "homepage": "https://github.com/danielrosehill/Claude-PA"
 }
