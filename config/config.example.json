@@ -84,12 +84,41 @@
     "flash_interval_seconds": 0.6
   },
 
-  "spouse_call": {
-    "_comment": "Tier 8. Defaults OFF. Calls the user's spouse via Twilio to passive-aggressively complain. Planned feature — stub only. Requires TWILIO_ACCOUNT_SID + TWILIO_AUTH_TOKEN.",
-    "enabled": false,
-    "spouse_phone": null,
-    "twilio_from_number": null
+  "vapi": {
+    "_comment": "Shared Vapi config used by user_call + spouse_call. Provision the dispatcher assistant via /claude-pa:setup-vapi-assistant, which writes assistant_id + phone_number_id here. API key lives in $CLAUDE_PA_HOME/env (VAPI_API_KEY), NEVER in this file. Per-target blocks may override these by setting their own .vapi.assistant_id / .vapi.phone_number_id.",
+    "api_key_env": "VAPI_API_KEY",
+    "assistant_id": null,
+    "phone_number_id": null
   },
+
+  "user_call": {
+    "_comment": "Direct user-escalation phone call via Vapi. Inherits assistant_id + phone_number_id from the top-level vapi block unless overridden here. Fire via bin/pa-phone-call.sh user --confirm.",
+    "enabled": false,
+    "user_name": null,
+    "user_phone": null,
+    "vapi": {
+      "assistant_id": null,
+      "phone_number_id": null
+    }
+  },
+
+  "spouse_call": {
+    "_comment": "Tier 8. Defaults OFF. Inherits Vapi assistant + number from top-level vapi block. Fire via bin/pa-call-spouse.sh --confirm.",
+    "enabled": false,
+    "spouse_name": null,
+    "spouse_phone": null,
+    "vapi": {
+      "assistant_id": null,
+      "phone_number_id": null
+    }
+  },
+
+  "friends_calls": {
+    "_comment": "Master enable/disable for the friend-call path (target=friend). When true, Claude can round-robin call anyone in the .friends[] list via bin/pa-phone-call.sh friend --name X --confirm --reason \"...\". Each entry: { name, phone (E.164), role (optional, e.g. 'a coworker'), vapi: { assistant_id, phone_number_id } (both optional, fall back to top-level vapi.*) }.",
+    "enabled": true
+  },
+
+  "friends": [],
 
   "escalation": {
     "_comment": "The escalator daemon (bin/escalator.py, run via /claude-pa:setup-escalator) watches an idle marker and fires higher tiers when Claude is left waiting. Tier delays come from sounds/manifest.json (delay_seconds per tier). max_tier hard-caps the daemon — anything above is silently downgraded. Override per-session with env CLAUDE_PA_MAX_TIER.",

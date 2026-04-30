@@ -32,9 +32,10 @@ If you don't respond, it escalates.
 | 5 | HA living room (PA register) | weary supermarket-announcer voice |
 | 6 | 📢 Whole-house PA | "would the owner of this Claude Code session please return…" |
 | 7 | 🌙 Bedroom lights flash (night, opt-in) | strobes you awake |
-| 8 | ☎️ Twilio spouse call (opt-in, planned) | passive-aggressively rings your spouse to ask why you're not answering |
+| 8 | ☎️ Vapi spouse call (opt-in) | passive-aggressively rings your spouse to ask why you're not answering |
+| 8.5 | ☎️ Vapi direct user call (opt-in) | rings your own phone — last-resort "where are you" call |
 
-Tiers 7 and 8 default OFF. Each has hard config gates. The Twilio tier is a planned stub.
+Tiers 7 and 8 default OFF. Each has hard config gates. The phone-call tiers ride on Vapi — set `VAPI_API_KEY` in `$CLAUDE_PA_HOME/env`, then populate `spouse_call` / `user_call` (`*_name`, `*_phone`, `vapi.assistant_id`, `vapi.phone_number_id`) in config.
 
 ## The Claude-signal
 
