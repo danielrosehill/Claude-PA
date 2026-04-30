@@ -1,0 +1,20 @@
+[Unit]
+Description=claude-pa escalator daemon — fires escalation tiers when Claude is left waiting
+After=default.target
+StartLimitIntervalSec=30
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/env python3 @PLUGIN_ROOT@/bin/escalator.py
+Environment=CLAUDE_PA_HOME=@CLAUDE_PA_HOME@
+Restart=on-failure
+RestartSec=3
+# No need for elevated privileges — pure file IPC + subprocess to dispatch.sh
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=@CLAUDE_PA_HOME@
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

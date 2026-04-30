@@ -67,6 +67,7 @@ Three independent ways to fire audio at a remote speaker — pick whichever matc
 - **`/dispatch <tag>`** is the main Claude-facing command. Tag taxonomy: `attention:*`, `status:*`, `complete:*`, `pa:*`, `catastrophe:*`. The router fans out to audio + signal bulb + screen flash in parallel.
 - **`/setup-ha`** spawns an agent that uses the home-assistant MCP to discover entities, propose a mapping for every cascade slot, test each one live, and write the validated config.
 - **CLAUDE.md snippet** appended per-repo — instructs Claude to call `/dispatch` whenever it would otherwise sit waiting silently.
+- **Escalator daemon** — a `systemd --user` service (with a plain-`nohup` fallback) that watches an idle marker file. When Claude fires an `attention:*` dispatch at tier 0 and you don't reply, the daemon walks the manifest's `delay_seconds` ladder and re-fires `dispatch` at higher tiers (chime → kitchen → doorbell → whole-house PA → bedroom strobe) until a `UserPromptSubmit` hook clears the marker. Install with `/claude-pa:setup-escalator`. Without this the cascade can't escalate — Claude only fires once per dispatch and has no way to nag you on a timer.
 
 ## Where things live
 

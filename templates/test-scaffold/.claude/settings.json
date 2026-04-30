@@ -5,6 +5,11 @@
     "CLAUDE_PA_AUTOINIT": "1",
     "CLAUDE_PA_MAX_TIER": "0"
   },
+  "hooks": {
+    "UserPromptSubmit": [
+      { "hooks": [{ "type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/bin/mark-active.sh" }] }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(*/claude-pa/*/bin/dispatch.sh:*)",
@@ -17,7 +22,10 @@
       "Bash(*/claude-pa/*/bin/pa-send.sh:*)",
       "Bash(*/claude-pa/*/bin/pa-send-mqtt.sh:*)",
       "Bash(*/claude-pa/*/bin/chime.sh:*)",
-      "Bash(*/claude-pa/*/bin/ring-doorbell.sh:*)"
+      "Bash(*/claude-pa/*/bin/ring-doorbell.sh:*)",
+      "Bash(*/claude-pa/*/bin/mark-idle.sh:*)",
+      "Bash(*/claude-pa/*/bin/mark-active.sh:*)",
+      "Bash(*/claude-pa/*/bin/escalator-ctl.sh:*)"
     ]
   }
 }

@@ -54,6 +54,14 @@ fi
 # Apply tier cap (test harness / safety override)
 TIER=$(claude_pa_cap_tier "$TIER")
 
+# Auto-mark idle on attention:* tags fired at tier 0 — this is the signal that
+# Claude is now waiting on the user. The escalator daemon picks it up and
+# fires higher tiers if no user prompt arrives. Higher-tier calls are assumed
+# to come FROM the daemon, so don't rewrite the marker.
+if [[ "$TIER" == "0" && "$TAG" == attention:* && "${CLAUDE_PA_FORCE:-0}" != "1" ]]; then
+  "$SCRIPT_DIR/mark-idle.sh" "$TAG" >/dev/null 2>&1 || true
+fi
+
 MANIFEST="$CLAUDE_PA_MANIFEST"
 TIER_DEF=$(jq -r --arg t "$TIER" '.escalation_tiers[$t] // empty' "$MANIFEST")
 [[ -n "$TIER_DEF" ]] || { echo "claude-pa: unknown tier $TIER" >&2; exit 3; }

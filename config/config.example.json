@@ -92,8 +92,9 @@
   },
 
   "escalation": {
+    "_comment": "The escalator daemon (bin/escalator.py, run via /claude-pa:setup-escalator) watches an idle marker and fires higher tiers when Claude is left waiting. Tier delays come from sounds/manifest.json (delay_seconds per tier). max_tier hard-caps the daemon — anything above is silently downgraded. Override per-session with env CLAUDE_PA_MAX_TIER.",
     "enabled": true,
-    "idle_marker_path": null
+    "max_tier": 6
   },
 
   "usage_monitor": {
