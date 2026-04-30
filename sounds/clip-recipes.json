@@ -1,0 +1,36 @@
+{
+  "_comment": "Single source of truth for the rendered clip library. bin/render-clips.sh reads this + sounds/voice-presets.json and writes sounds/voices/<pack-slug>/<category>/<slug>.mp3.",
+  "lines": [
+    {"category": "attention", "slug": "user-user",         "text": "User! User! Your approval is needed!"},
+    {"category": "attention", "slug": "pick-up",           "text": "Pick up. Pick up."},
+    {"category": "attention", "slug": "oi",                "text": "Oi! You there."},
+    {"category": "attention", "slug": "hey-you",           "text": "Hey, you. Yeah, you."},
+
+    {"category": "status",    "slug": "subagent-hurry-up", "text": "Subagent! Hurry up!"},
+    {"category": "status",    "slug": "trying-subagent",   "text": "Tryin' to get a hold of a subagent."},
+    {"category": "status",    "slug": "running-plugin",    "text": "Running a plugin."},
+    {"category": "status",    "slug": "still-waiting",     "text": "Still waitin' on driver four. Typical."},
+    {"category": "status",    "slug": "subagent-done",     "text": "Subagent's back. Job's done."},
+    {"category": "status",    "slug": "blocker-hit",       "text": "We got a blocker. Need you on the radio."},
+
+    {"category": "pa",        "slug": "pa-return-to-computer", "text": "This is a message for the user from Claude Code. Kindly return to the computer where your input is needed."},
+    {"category": "pa",        "slug": "pa-attention-household", "text": "Attention household. If anyone can hear this, Claude is looking for the user. Repeat — Claude is looking for the user. Thank you."},
+    {"category": "pa",        "slug": "pa-front-desk",     "text": "Would the owner of this Claude Code session please return to their workstation. Your sub-agent has been waiting."},
+    {"category": "pa",        "slug": "pa-customer-service","text": "This is a customer service announcement. Your AI assistant is at the front desk. Your AI assistant. At the front desk."},
+
+    {"category": "complete",  "slug": "project-complete",  "text": "The project has been successfully completed!"},
+    {"category": "complete",  "slug": "job-done-gruff",    "text": "Job's done. Pull it forward."},
+
+    {"category": "catastrophe","slug": "codebase-destroyed","text": "This is a message for the user from Claude Code. Regrettably, due to circumstances beyond our control, your entire codebase has been destroyed and all progress has been irrevocably lost. We apologize sincerely for the inconvenience caused."},
+
+    {"category": "ambient",   "slug": "ambient-typical",   "text": "Typical."},
+    {"category": "ambient",   "slug": "ambient-cmon",      "text": "C'mon, c'mon."},
+    {"category": "ambient",   "slug": "ambient-radio-check","text": "Radio check, radio check."},
+
+    {"category": "usage",     "slug": "halfway",           "text": "Halfway through the tank. Just lettin' you know."},
+    {"category": "usage",     "slug": "three-quarters",    "text": "Three-quarters used. Pace yourself."},
+    {"category": "usage",     "slug": "ninety-percent",    "text": "Ninety percent. Wrap it up."},
+    {"category": "usage",     "slug": "limit-imminent",    "text": "Almost out. Last call before the meter runs dry."},
+    {"category": "usage",     "slug": "limit-hit",         "text": "Usage limit reached. The taxi rank is closed for the evening. Please return tomorrow."}
+  ]
+}

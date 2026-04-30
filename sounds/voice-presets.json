@@ -1,0 +1,41 @@
+{
+  "_comment": "Curated voice presets shipped with the plugin. Each preset has a Fish Audio model_id and a short character description. Onboarding lets the user pick one as their dispatcher_voice; complete:project always uses the dj-fred celebration voice.",
+  "presets": [
+    {
+      "slug": "tired-dispatcher",
+      "model_id": "6c7e5318ee04449b8b3c0a06ad57b5b0",
+      "label": "Tired dispatcher",
+      "description": "Worn-down, sighing — the 'I've been cleaning up after you all night' register. Default. Fits the passive-aggressive conceit perfectly."
+    },
+    {
+      "slug": "alarmed-dispatcher",
+      "model_id": "8fe7d1ff3ed145bb93645806edc21298",
+      "label": "Alarmed dispatcher",
+      "description": "Loud, energetic, slightly panicked. 'Stop right there!' register — closer to a flustered controller losing his grip on the rank."
+    },
+    {
+      "slug": "wildcard",
+      "model_id": "7fedfdbd6ae64740b32c621ed907609a",
+      "label": "Wildcard #1",
+      "description": "Unauditioned. Roll the dice."
+    },
+    {
+      "slug": "wildcard-2",
+      "model_id": "ead241ca12c64514a5acc9e97106fe82",
+      "label": "Wildcard #2",
+      "description": "Unauditioned. Second roll."
+    }
+  ],
+  "celebration": {
+    "slug": "dj-fred",
+    "model_id": "29e4b6f5c8ea4db8bbcfb7ca9720bc6c",
+    "label": "DJ Fred",
+    "description": "High-energy DJ — used for project-complete fanfare, regardless of the chosen dispatcher voice."
+  },
+  "audition_lines": [
+    {"slug": "attention",   "text": "Daniel! Pick up. Pick up."},
+    {"slug": "status",      "text": "Subagent's still out. Typical."},
+    {"slug": "pa",          "text": "Attention household. If anyone can hear this, Claude is looking for the user. Thank you."},
+    {"slug": "complete",    "text": "The project has been successfully completed."}
+  ]
+}
