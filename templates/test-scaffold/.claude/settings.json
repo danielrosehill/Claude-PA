@@ -1,8 +1,23 @@
 {
   "_comment": "Throwaway test scaffold for claude-pa. CLAUDE_PA_MAX_TIER caps escalation at the local desk speaker — no doorbell, no whole-house PA, no bedroom strobe. Do not raise it without understanding what each tier does.",
-  "enabledPlugins": { "claude-pa": true },
+  "enabledPlugins": { "claude-pa@danielrosehill": true },
   "env": {
     "CLAUDE_PA_AUTOINIT": "1",
     "CLAUDE_PA_MAX_TIER": "0"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(*/claude-pa/*/bin/dispatch.sh:*)",
+      "Bash(*/claude-pa/*/bin/mute.sh:*)",
+      "Bash(*/claude-pa/*/bin/schedule.sh:*)",
+      "Bash(*/claude-pa/*/bin/is-muted.sh:*)",
+      "Bash(*/claude-pa/*/bin/play-local.sh:*)",
+      "Bash(*/claude-pa/*/bin/signal-bulb.sh:*)",
+      "Bash(*/claude-pa/*/bin/screen-flash.sh:*)",
+      "Bash(*/claude-pa/*/bin/pa-send.sh:*)",
+      "Bash(*/claude-pa/*/bin/pa-send-mqtt.sh:*)",
+      "Bash(*/claude-pa/*/bin/chime.sh:*)",
+      "Bash(*/claude-pa/*/bin/ring-doorbell.sh:*)"
+    ]
   }
 }
