@@ -4,13 +4,13 @@ description: Set or inspect when claude-pa is allowed to fire. Two modes — rec
 
 ## Usage
 
-- `/claude-pa:schedule` — show current schedule + active state
-- `/claude-pa:schedule off` — clear schedule (always allowed unless explicitly muted)
-- `/claude-pa:schedule during 90m` — active for the next 90 minutes (session mode — pairs with task-planning workflows)
-- `/claude-pa:schedule during 2h --label "deep work"` — same, with a label
-- `/claude-pa:schedule windows mon-fri:09:00-17:00` — recurring weekday business hours
-- `/claude-pa:schedule windows weekdays:09:00-17:00 sat:10:00-12:00` — multiple windows
-- `/claude-pa:schedule windows all:08:00-22:00` — every day, 8am-10pm
+- `/passive-aggressive-pa:schedule` — show current schedule + active state
+- `/passive-aggressive-pa:schedule off` — clear schedule (always allowed unless explicitly muted)
+- `/passive-aggressive-pa:schedule during 90m` — active for the next 90 minutes (session mode — pairs with task-planning workflows)
+- `/passive-aggressive-pa:schedule during 2h --label "deep work"` — same, with a label
+- `/passive-aggressive-pa:schedule windows mon-fri:09:00-17:00` — recurring weekday business hours
+- `/passive-aggressive-pa:schedule windows weekdays:09:00-17:00 sat:10:00-12:00` — multiple windows
+- `/passive-aggressive-pa:schedule windows all:08:00-22:00` — every day, 8am-10pm
 
 ## Window spec
 
@@ -29,7 +29,7 @@ description: Set or inspect when claude-pa is allowed to fire. Two modes — rec
 
 ## How it interacts with mute
 
-- An explicit mute (`/claude-pa:mute`) always wins.
+- An explicit mute (`/passive-aggressive-pa:mute`) always wins.
 - Outside an active schedule window, the dispatcher is silent (same effect as muted).
 - Inside an active window, normal dispatch behaviour resumes.
 

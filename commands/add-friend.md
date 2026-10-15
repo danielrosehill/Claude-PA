@@ -1,5 +1,5 @@
 ---
-description: Add a friend (name + phone) to $CLAUDE_PA_HOME/config.json so Claude can call them via /claude-pa:place-call with target=friend. Optional fields: role (e.g. "a coworker"), per-friend Vapi overrides.
+description: Add a friend (name + phone) to $CLAUDE_PA_HOME/config.json so Claude can call them via /passive-aggressive-pa:place-call with target=friend. Optional fields: role (e.g. "a coworker"), per-friend Vapi overrides.
 ---
 
 Append a new entry to `.friends[]` in `$CLAUDE_PA_HOME/config.json`. Each

@@ -58,7 +58,7 @@ Same color taxonomy as the bulb, but on your monitor. A brief full-screen colore
 Three independent ways to fire audio at a remote speaker — pick whichever matches your home stack:
 
 - **Local PipeWire / PulseAudio** — desk speaker, no network needed. Always available.
-- **Home Assistant** — REST API to `media_player.*` entities. Tier targets prefixed `ha:<key>`. Configured via `/claude-pa:setup-ha`.
+- **Home Assistant** — REST API to `media_player.*` entities. Tier targets prefixed `ha:<key>`. Configured via `/passive-aggressive-pa:setup-ha`.
 - **MQTT (Mosquitto)** — direct publish to a configured topic, JSON payload with audio URL. Tier targets prefixed `mqtt:<key>`. Useful for ESP / Tasmota / custom subscribers, or anyone running a broker without HA.
 
 ## How it works
@@ -68,7 +68,7 @@ Three independent ways to fire audio at a remote speaker — pick whichever matc
 - **`/dispatch <tag>`** is the main Claude-facing command. Tag taxonomy: `attention:*`, `status:*`, `complete:*`, `pa:*`, `catastrophe:*`. The router fans out to audio + signal bulb + screen flash in parallel.
 - **`/setup-ha`** spawns an agent that uses the home-assistant MCP to discover entities, propose a mapping for every cascade slot, test each one live, and write the validated config.
 - **CLAUDE.md snippet** appended per-repo — instructs Claude to call `/dispatch` whenever it would otherwise sit waiting silently.
-- **Escalator daemon** — a `systemd --user` service (with a plain-`nohup` fallback) that watches an idle marker file. When Claude fires an `attention:*` dispatch at tier 0 and you don't reply, the daemon walks the manifest's `delay_seconds` ladder and re-fires `dispatch` at higher tiers (chime → kitchen → doorbell → whole-house PA → bedroom strobe) until a `UserPromptSubmit` hook clears the marker. Install with `/claude-pa:setup-escalator`. Without this the cascade can't escalate — Claude only fires once per dispatch and has no way to nag you on a timer.
+- **Escalator daemon** — a `systemd --user` service (with a plain-`nohup` fallback) that watches an idle marker file. When Claude fires an `attention:*` dispatch at tier 0 and you don't reply, the daemon walks the manifest's `delay_seconds` ladder and re-fires `dispatch` at higher tiers (chime → kitchen → doorbell → whole-house PA → bedroom strobe) until a `UserPromptSubmit` hook clears the marker. Install with `/passive-aggressive-pa:setup-escalator`. Without this the cascade can't escalate — Claude only fires once per dispatch and has no way to nag you on a timer.
 
 ## Where things live
 
@@ -89,15 +89,15 @@ Override with `$CLAUDE_PA_HOME` or follow `$XDG_DATA_HOME`.
 
 ## Quiet mode
 
-`/claude-pa:mute 30m`, `/claude-pa:mute until 17:00`, `/claude-pa:mute indefinite`, `/claude-pa:unmute`. The dispatcher checks a sentinel before every fire — muted dispatches are logged but silent. Or just say "shut up claude-pa for an hour" and the `quiet-mode` skill picks it up.
+`/passive-aggressive-pa:mute 30m`, `/passive-aggressive-pa:mute until 17:00`, `/passive-aggressive-pa:mute indefinite`, `/passive-aggressive-pa:unmute`. The dispatcher checks a sentinel before every fire — muted dispatches are logged but silent. Or just say "shut up claude-pa for an hour" and the `quiet-mode` skill picks it up.
 
 ## Schedule
 
-`/claude-pa:schedule during 90m` for session-scoped active windows (pairs with task-planning workflows — the system auto-mutes when the block ends). `/claude-pa:schedule windows weekdays:09:00-17:00` for recurring time-of-day rules. Outside the schedule the dispatcher is silent without you having to mute manually.
+`/passive-aggressive-pa:schedule during 90m` for session-scoped active windows (pairs with task-planning workflows — the system auto-mutes when the block ends). `/passive-aggressive-pa:schedule windows weekdays:09:00-17:00` for recurring time-of-day rules. Outside the schedule the dispatcher is silent without you having to mute manually.
 
 ## Status
 
-Voice packs rendered (4 packs shipped). Core dispatch + screen flash + MQTT + HA transports working. Run `/claude-pa:onboard` then `/claude-pa:setup-ha` to wire up Home Assistant, or set the `mqtt.*` block in config to use Mosquitto instead.
+Voice packs rendered (4 packs shipped). Core dispatch + screen flash + MQTT + HA transports working. Run `/passive-aggressive-pa:onboard` then `/passive-aggressive-pa:setup-ha` to wire up Home Assistant, or set the `mqtt.*` block in config to use Mosquitto instead.
 
 ## Trying it out
 

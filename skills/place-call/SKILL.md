@@ -34,7 +34,7 @@ reason **before** firing the call.
    the spouse or a friend is more invasive.
 2. **For friend calls**: read `$CLAUDE_PA_HOME/config.json` and confirm the
    named friend exists in `.friends[]`. If they don't, ask the user for the
-   phone number first and either add via `/claude-pa:add-friend` or use
+   phone number first and either add via `/passive-aggressive-pa:add-friend` or use
    `target=adhoc` for a one-shot call.
 3. **Assemble the reason** from the live conversation context:
    - What is Claude blocked on right now? (approval, a question, an error)
@@ -43,7 +43,7 @@ reason **before** firing the call.
    Write it as a short, factual sentence — the assistant will paraphrase.
 4. **Confirm gates** in `$CLAUDE_PA_HOME/config.json`:
    - `vapi.assistant_id` is set (otherwise tell the user to run
-     `/claude-pa:setup-vapi-assistant` first).
+     `/passive-aggressive-pa:setup-vapi-assistant` first).
    - The target's `*.enabled` is `true` (or `friends_calls.enabled` for
      friend/adhoc).
 5. **Fire the call.** Run:

@@ -39,7 +39,7 @@ description: First-run setup for Claude-PA. Creates $CLAUDE_PA_HOME, copies the 
    If the user's machine has working audio they should hear a bark. If `paplay` errors, surface it — local sink probably needs `local_audio.sink` set in the config.
 
 6. **Offer to continue.** Two natural next steps:
-   - `/claude-pa:setup-ha` — wire up Home Assistant entities for tiers 2-7 (chime, multi-room speakers, doorbell, signal bulb, bedroom strobe).
+   - `/passive-aggressive-pa:setup-ha` — wire up Home Assistant entities for tiers 2-7 (chime, multi-room speakers, doorbell, signal bulb, bedroom strobe).
    - Manual MQTT config — if the user runs Mosquitto instead of HA, point them at the `mqtt.*` block in `~/.local/share/claude-pa/config.json`.
    - Skip both if they only want the local desk speaker (tier 0 works out of the box).
 

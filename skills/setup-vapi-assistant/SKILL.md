@@ -1,6 +1,6 @@
 ---
 name: setup-vapi-assistant
-description: Provision (or update) the Claude-PA dispatcher assistant in Vapi using the shipped system prompt, then wire its assistant_id + phone_number_id into $CLAUDE_PA_HOME/config.json under user_call.vapi and spouse_call.vapi. Use when the user runs /claude-pa:setup-vapi-assistant or asks you to set up the Vapi side of Claude-PA.
+description: Provision (or update) the Claude-PA dispatcher assistant in Vapi using the shipped system prompt, then wire its assistant_id + phone_number_id into $CLAUDE_PA_HOME/config.json under user_call.vapi and spouse_call.vapi. Use when the user runs /passive-aggressive-pa:setup-vapi-assistant or asks you to set up the Vapi side of Claude-PA.
 ---
 
 # Setup the Claude-PA Vapi dispatcher assistant

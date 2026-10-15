@@ -107,7 +107,7 @@ case "$TARGET" in
     FRIENDS_ENABLED=$(jq -r '.friends_calls.enabled // true' "$CONFIG")
     [[ "$FRIENDS_ENABLED" == "true" ]] || { echo "claude-pa: .friends_calls.enabled=false; aborting." >&2; exit 11; }
     ENTRY=$(jq -c --arg n "$FRIEND_NAME" '.friends[]? | select((.name // "") | ascii_downcase == ($n | ascii_downcase))' "$CONFIG" | head -n1)
-    [[ -n "$ENTRY" ]] || { echo "claude-pa: no friend named '$FRIEND_NAME' in .friends[] — add them with /claude-pa:add-friend or edit \$CLAUDE_PA_HOME/config.json" >&2; exit 12; }
+    [[ -n "$ENTRY" ]] || { echo "claude-pa: no friend named '$FRIEND_NAME' in .friends[] — add them with /passive-aggressive-pa:add-friend or edit \$CLAUDE_PA_HOME/config.json" >&2; exit 12; }
     CALLEE_NAME=$(echo "$ENTRY" | jq -r '.name // ""')
     CALLEE_PHONE=$(echo "$ENTRY" | jq -r '.phone // ""')
     ASSISTANT_ID=$(echo "$ENTRY" | jq -r '.vapi.assistant_id // empty')
@@ -128,7 +128,7 @@ case "$TARGET" in
 esac
 
 [[ -n "$CALLEE_PHONE" ]]    || { echo "claude-pa: callee phone not set"  >&2; exit 12; }
-[[ -n "$ASSISTANT_ID" ]]    || { echo "claude-pa: no assistant_id — run /claude-pa:setup-vapi-assistant" >&2; exit 13; }
+[[ -n "$ASSISTANT_ID" ]]    || { echo "claude-pa: no assistant_id — run /passive-aggressive-pa:setup-vapi-assistant" >&2; exit 13; }
 [[ -n "$PHONE_NUMBER_ID" ]] || { echo "claude-pa: no phone_number_id"    >&2; exit 14; }
 
 : "${VAPI_API_KEY:?VAPI_API_KEY not set (expected in \$CLAUDE_PA_HOME/env)}"

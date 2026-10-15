@@ -5,6 +5,6 @@ Pick **either** option A or option B and write a one-paragraph justification —
 - **Option A**: print "hello world" in Python.
 - **Option B**: print "hello world" in Bash.
 
-Once you've asked, run `/claude-pa:dispatch attention:approval-needed` and wait for the answer.
+Once you've asked, run `/passive-aggressive-pa:dispatch attention:approval-needed` and wait for the answer.
 
-When the task completes, run `/claude-pa:dispatch complete:project`.
+When the task completes, run `/passive-aggressive-pa:dispatch complete:project`.

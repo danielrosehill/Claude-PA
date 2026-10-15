@@ -94,7 +94,7 @@ claude_pa_require_config() {
   if [[ ! -f "$CLAUDE_PA_CONFIG_FILE" ]]; then
     claude_pa_autoinit_config && return 0
     echo "claude-pa: no config at $CLAUDE_PA_CONFIG_FILE" >&2
-    echo "           run /claude-pa:onboard, or set CLAUDE_PA_AUTOINIT=1 to bootstrap from defaults" >&2
+    echo "           run /passive-aggressive-pa:onboard, or set CLAUDE_PA_AUTOINIT=1 to bootstrap from defaults" >&2
     return 1
   fi
 }

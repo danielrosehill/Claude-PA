@@ -1,5 +1,5 @@
 ---
-description: Clear any active claude-pa mute and resume normal dispatching. Does not affect the recurring schedule (use /claude-pa:schedule off for that).
+description: Clear any active claude-pa mute and resume normal dispatching. Does not affect the recurring schedule (use /passive-aggressive-pa:schedule off for that).
 ---
 
 ## Steps

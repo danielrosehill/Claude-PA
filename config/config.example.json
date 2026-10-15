@@ -1,5 +1,5 @@
 {
-  "_comment": "Live config lives at $CLAUDE_PA_HOME/config.json (default: ~/.local/share/claude-pa/config.json), NOT here. This file is shipped with the plugin as a template — copy + edit, or run /claude-pa:setup-ha to have an agent fill it in for you.",
+  "_comment": "Live config lives at $CLAUDE_PA_HOME/config.json (default: ~/.local/share/claude-pa/config.json), NOT here. This file is shipped with the plugin as a template — copy + edit, or run /passive-aggressive-pa:setup-ha to have an agent fill it in for you.",
 
   "user_name": "Daniel",
 
@@ -85,7 +85,7 @@
   },
 
   "vapi": {
-    "_comment": "Shared Vapi config used by user_call + spouse_call. Provision the dispatcher assistant via /claude-pa:setup-vapi-assistant, which writes assistant_id + phone_number_id here. API key lives in $CLAUDE_PA_HOME/env (VAPI_API_KEY), NEVER in this file. Per-target blocks may override these by setting their own .vapi.assistant_id / .vapi.phone_number_id.",
+    "_comment": "Shared Vapi config used by user_call + spouse_call. Provision the dispatcher assistant via /passive-aggressive-pa:setup-vapi-assistant, which writes assistant_id + phone_number_id here. API key lives in $CLAUDE_PA_HOME/env (VAPI_API_KEY), NEVER in this file. Per-target blocks may override these by setting their own .vapi.assistant_id / .vapi.phone_number_id.",
     "api_key_env": "VAPI_API_KEY",
     "assistant_id": null,
     "phone_number_id": null
@@ -121,7 +121,7 @@
   "friends": [],
 
   "escalation": {
-    "_comment": "The escalator daemon (bin/escalator.py, run via /claude-pa:setup-escalator) watches an idle marker and fires higher tiers when Claude is left waiting. Tier delays come from sounds/manifest.json (delay_seconds per tier). max_tier hard-caps the daemon — anything above is silently downgraded. Override per-session with env CLAUDE_PA_MAX_TIER.",
+    "_comment": "The escalator daemon (bin/escalator.py, run via /passive-aggressive-pa:setup-escalator) watches an idle marker and fires higher tiers when Claude is left waiting. Tier delays come from sounds/manifest.json (delay_seconds per tier). max_tier hard-caps the daemon — anything above is silently downgraded. Override per-session with env CLAUDE_PA_MAX_TIER.",
     "enabled": true,
     "max_tier": 6
   },

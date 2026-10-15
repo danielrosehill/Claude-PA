@@ -8,10 +8,10 @@ Call these instead of going silent:
 
 | When you would... | Run |
 |---|---|
-| Pause and wait for the user | `/claude-pa:dispatch attention:approval-needed` |
-| Finish a task and go idle | `/claude-pa:dispatch complete:project` |
-| Kick off a sub-agent | `/claude-pa:dispatch status:subagent-running` |
-| Hit a blocker | `/claude-pa:dispatch status:blocker` |
+| Pause and wait for the user | `/passive-aggressive-pa:dispatch attention:approval-needed` |
+| Finish a task and go idle | `/passive-aggressive-pa:dispatch complete:project` |
+| Kick off a sub-agent | `/passive-aggressive-pa:dispatch status:subagent-running` |
+| Hit a blocker | `/passive-aggressive-pa:dispatch status:blocker` |
 
 The dispatcher fires audio + (if configured) screen flash + signal bulb in parallel.
 

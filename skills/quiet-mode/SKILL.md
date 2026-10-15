@@ -55,7 +55,7 @@ User: *"resume"*
 
 - Don't combine mute + schedule in one go unless the user explicitly asked. Pick the simplest tool for the request.
 - Don't auto-set a reason/label unless the user gave one — don't fabricate context.
-- Don't fire a confirmation dispatch on mute/pause (that would defeat the point). Firing one on `unmute` is fine and built into `/claude-pa:unmute`.
+- Don't fire a confirmation dispatch on mute/pause (that would defeat the point). Firing one on `unmute` is fine and built into `/passive-aggressive-pa:unmute`.
 
 ## Pairs with task planning
 
