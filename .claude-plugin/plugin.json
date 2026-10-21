@@ -1,6 +1,6 @@
 {
   "name": "passive-aggressive-pa",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Passive-aggressive PA system for Claude Code. Claude barks status updates at you over a speaker; if ignored, escalates across the house via Home Assistant.",
   "author": {
     "name": "Daniel Rosehill",
